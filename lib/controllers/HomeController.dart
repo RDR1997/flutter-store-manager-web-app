@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   var isObscure = true.obs;
   var isLoading = false.obs;
+  var isMobile = false.obs;
 
   var shopName = ''.obs;
+  var activeIndex = 0.obs;
 
   @override
   void onInit() {

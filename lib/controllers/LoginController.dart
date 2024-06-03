@@ -3,14 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:storemanager/controllers/ProductController.dart';
 import 'package:storemanager/views/Home.dart';
 import 'package:storemanager/views/Login.dart';
 import '../Constants.dart';
 import '../views/Components/LoginAlertBox.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/Environment.dart';
 
 class LoginController extends GetxController {
+  final productController = Get.put(ProductController());
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -18,6 +21,7 @@ class LoginController extends GetxController {
   var isLoading = false.obs;
 
   var loginMassage = ''.obs;
+  var authToken = ''.obs;
   var userId = 1.obs;
 
   @override
@@ -50,8 +54,6 @@ class LoginController extends GetxController {
   }
 
   login(String name, String password) async {
-    print(name);
-    print(password);
     final url = "${Environment().api}/login";
     final response = await http.post(Uri.parse(url), body: {
       "username": name,
@@ -59,10 +61,14 @@ class LoginController extends GetxController {
     }, headers: {
       'Accept': 'application/json',
     });
-    print(response.request);
 
     if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      authToken.value = data['token'];
+      productController.auth_token.value = data['token'];
+
       showToast('Successfully Logged In..!');
+      await productController.getProducts();
       Get.off(Home());
     } else if (response.statusCode == 401) {
       showToast('Incorrect Username or Password');

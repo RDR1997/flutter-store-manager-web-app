@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:storemanager/controllers/HomeController.dart';
 import '../Constants.dart';
 import '../controllers/LoginController.dart';
 import 'Home.dart';
 
 class Login extends StatelessWidget {
   final loginController = Get.put(LoginController());
+  final homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
     final Height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     final Width = MediaQuery.of(context).size.width;
+
+    Width > 600
+        ? homeController.isMobile.value = false
+        : homeController.isMobile.value = true;
 
     return Scaffold(
         // backgroundColor: Colors.lightBlue,
