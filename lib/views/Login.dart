@@ -38,7 +38,7 @@ class Login extends StatelessWidget {
                 Icon(
                   Icons.store_rounded,
                   size: 100,
-                  color: colortheam1,
+                  color: colortheam2,
                 ),
                 const SizedBox(
                   height: 10,
@@ -168,7 +168,7 @@ class Login extends StatelessWidget {
 
                                     // Add your login logic here
                                   },
-                                  color: colortheam1,
+                                  color: colortheam2,
                                   textColor: Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
