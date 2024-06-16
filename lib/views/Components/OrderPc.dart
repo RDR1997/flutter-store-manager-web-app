@@ -91,6 +91,15 @@ class OrderPc extends StatelessWidget {
                                   item['discount'] = int.tryParse(value) ?? 0;
                                   productController
                                       .update(); // Trigger UI update
+                                  for (var product
+                                      in homeController.selectedProductsList) {
+                                    if (product['id'] == item['id']) {
+                                      product['discount'] =
+                                          int.tryParse(value) ?? 0;
+                                      print(item);
+                                      break;
+                                    }
+                                  }
                                 },
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
@@ -146,7 +155,9 @@ class OrderPc extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await homeController.sendOrderData();
+                  },
                   child: const Text('Done',
                       style: TextStyle(
                           fontWeight: FontWeight.w800, fontSize: 20))),

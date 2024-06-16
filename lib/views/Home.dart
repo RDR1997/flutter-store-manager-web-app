@@ -404,7 +404,7 @@ class Home extends StatelessWidget {
                                                                               print(variables[index].value);
                                                                               variables[index].value == '' ? variables[index].value = '0' : variables[index].value;
 
-                                                                              await homeController.updateProductQuantity(index, productController.productsList[index].name, int.parse(variables[index].value), productController.productsList[index].price);
+                                                                              await homeController.updateProductQuantity(productController.productsList[index].id, productController.productsList[index].name, int.parse(variables[index].value), productController.productsList[index].price);
                                                                               print(homeController.selectedProductsList);
 
                                                                               Get.back();
@@ -489,7 +489,7 @@ class Home extends StatelessWidget {
                                                                                     overflow: TextOverflow.fade,
                                                                                   ),
                                                                                 ]),
-                                                                                SizedBox(height: Height*0.01),
+                                                                                SizedBox(height: Height * 0.01),
                                                                                 Text(
                                                                                   productController.productsList[index].name,
                                                                                   style: TextStyle(
