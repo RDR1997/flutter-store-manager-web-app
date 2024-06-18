@@ -29,34 +29,38 @@ class Product {
   int id;
   String name;
   String otherName;
-  String brand;
+  int brandId;
   String model;
   int price;
   int quantity;
+  int distributorId;
   String note;
-  int categoryId;
-  int sectionId;
+  int rackId;
+  int rackLevel;
   int createdBy;
   DateTime createdDate;
   dynamic modifiedBy;
   dynamic modifiedDate;
+  String brandName;
   List<Image> images;
 
   Product({
     required this.id,
     required this.name,
     required this.otherName,
-    required this.brand,
+    required this.brandId,
     required this.model,
     required this.price,
     required this.quantity,
+    required this.distributorId,
     required this.note,
-    required this.categoryId,
-    required this.sectionId,
+    required this.rackId,
+    required this.rackLevel,
     required this.createdBy,
     required this.createdDate,
     required this.modifiedBy,
     required this.modifiedDate,
+    required this.brandName,
     required this.images,
   });
 
@@ -64,17 +68,19 @@ class Product {
         id: json["id"],
         name: json["name"],
         otherName: json["other_name"],
-        brand: json["brand"],
+        brandId: json["brand_id"],
         model: json["model"],
         price: json["price"],
         quantity: json["quantity"],
+        distributorId: json["distributor_id"],
         note: json["note"],
-        categoryId: json["category_id"],
-        sectionId: json["section_id"],
+        rackId: json["rack_id"],
+        rackLevel: json["rack_level"],
         createdBy: json["created_by"],
         createdDate: DateTime.parse(json["created_date"]),
         modifiedBy: json["modified_by"],
         modifiedDate: json["modified_date"],
+        brandName: json["brandName"],
         images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
       );
 
@@ -82,17 +88,19 @@ class Product {
         "id": id,
         "name": name,
         "other_name": otherName,
-        "brand": brand,
+        "brand_id": brandId,
         "model": model,
         "price": price,
         "quantity": quantity,
+        "distributor_id": distributorId,
         "note": note,
-        "category_id": categoryId,
-        "section_id": sectionId,
+        "rack_id": rackId,
+        "rack_level": rackLevel,
         "created_by": createdBy,
         "created_date": createdDate.toIso8601String(),
         "modified_by": modifiedBy,
         "modified_date": modifiedDate,
+        "brandName": brandName,
         "images": List<dynamic>.from(images.map((x) => x.toJson())),
       };
 }

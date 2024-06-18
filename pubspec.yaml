@@ -43,6 +43,9 @@ dependencies:
   intl: ^0.18.1
   path_provider: ^2.1.1
   open_file: ^3.3.2
+  searchfield: ^1.0.5
+  image_picker: ^1.0.4
+  dotted_border: ^2.1.0
   
   
 

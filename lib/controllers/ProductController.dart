@@ -43,12 +43,10 @@ class ProductController extends GetxController {
   }
 
   getProducts() async {
-    print('productss');
     var productsData = await fetchProducts();
     List<Product> productsDataList = productsData.products;
 
     productsList.value = productsDataList;
-    print(productsList[0].id);
   }
 
   Future<Products> fetchProducts() async {
@@ -60,6 +58,7 @@ class ProductController extends GetxController {
     });
 
     var result = jsonDecode(response.body);
+    
     if (response.statusCode == 200) {
     } else if (response.statusCode == 401) {
       showToast('Login session expired, login again');
