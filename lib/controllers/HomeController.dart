@@ -214,16 +214,14 @@ class HomeController extends GetxController {
     for (var file in productImages) {
       var stream = http.ByteStream(file.openRead());
       var length = await file.length();
-      var multipartFile = http.MultipartFile('images[]', stream, length,
-          filename: file.path.toString() + file.name);
+      var multipartFile =
+          http.MultipartFile('images', stream, length, filename: file.name);
       request.files.add(multipartFile);
     }
-
+    print('0000000000000000000000');
     var response = await request.send();
-    var responseBody = await response.stream.bytesToString();
-    var result = jsonDecode(responseBody);
+    print('1111111111111111111111');
 
-    print(result);
 
     if (response.statusCode == 200) {
       Get.back();
