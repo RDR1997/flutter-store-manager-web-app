@@ -42,6 +42,9 @@ class HomeController extends GetxController {
   final addProductRackNumberController = TextEditingController();
   final addProductRackLevelController = TextEditingController();
   final addDistributorController = TextEditingController();
+  final addDistributorPhoneNoController = TextEditingController();
+  final addDistributorNoteController = TextEditingController();
+
 
   @override
   void onInit() {
@@ -156,6 +159,19 @@ class HomeController extends GetxController {
     return (result);
   }
 
+  addBrand() async {
+    final url = "${Environment().api}/product/brand";
+    final response = await http.post(Uri.parse(url), headers: {
+      // 'App-Version': appVersion,
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${productController.auth_token}',
+    }, body: {
+      'name': addBrandController.text
+    });
+    var result = jsonDecode(response.body);
+    return (result);
+  }
+
   fetchDistributors() async {
     final url = "${Environment().api}/product/distributors";
     final response = await http.get(Uri.parse(url), headers: {
@@ -171,9 +187,24 @@ class HomeController extends GetxController {
     return (result);
   }
 
+  addDistributor() async {
+    final url = "${Environment().api}/product/distributor";
+    final response = await http.post(Uri.parse(url), headers: {
+      // 'App-Version': appVersion,
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${productController.auth_token}',
+    }, body: {
+      'name': addDistributorController.text,
+      'phoneNo':addDistributorPhoneNoController.text,
+      'note':addDistributorNoteController.text
+    });
+    var result = jsonDecode(response.body);
+    return (result);
+  }
+
   Future getProductImages() async {
     final picker = ImagePicker();
-    final List<XFile>? pickedFiles = await picker.pickMultiImage();
+    final List<XFile>? pickedFiles = await picker.pickMultiImage(imageQuality: 20);
     if (pickedFiles != null) {
       productImages.addAll(pickedFiles);
     } else {
@@ -181,7 +212,7 @@ class HomeController extends GetxController {
     }
   }
 
-  //get Quotation from Camera
+ 
   Future getProductImagesCamera() async {
     final ImagePicker _picker = ImagePicker();
     final img =
@@ -221,7 +252,6 @@ class HomeController extends GetxController {
     print('0000000000000000000000');
     var response = await request.send();
     print('1111111111111111111111');
-
 
     if (response.statusCode == 200) {
       Get.back();

@@ -11,6 +11,8 @@ import 'package:storemanager/controllers/HomeController.dart';
 import 'package:storemanager/controllers/ProductController.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:storemanager/views/Components/AddBrand.dart';
+import 'package:storemanager/views/Components/AddDistributor.dart';
 
 class AddProduct extends StatelessWidget {
   AddProduct({Key? key}) : super(key: key);
@@ -195,113 +197,125 @@ class AddProduct extends StatelessWidget {
                                             children: [
                                               Expanded(
                                                 flex: 10,
-                                                child: SearchField<dynamic>(
-                                                  controller: homeController
-                                                      .addBrandController,
-                                                  focusNode: focus,
-                                                  itemHeight: 55,
-                                                  searchInputDecoration:
-                                                      InputDecoration(
-                                                    border:
-                                                        const OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none,
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                        Radius.circular(7.0),
+                                                child: Obx(() =>
+                                                    SearchField<dynamic>(
+                                                      // controller: homeController
+                                                      //     .addBrandController,
+                                                      focusNode: focus,
+                                                      itemHeight: 55,
+                                                      searchInputDecoration:
+                                                          InputDecoration(
+                                                        border:
+                                                            const OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                            Radius.circular(
+                                                                7.0),
+                                                          ),
+                                                        ),
+                                                        // suffixIcon: Icon(
+                                                        //   Icons.arrow_drop_down,
+                                                        //   size: 40,
+                                                        // ),
+
+                                                        filled: true,
+                                                        fillColor:
+                                                            HexColor("#F6F7FA"),
+                                                        labelText: "Brand",
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                                fontSize: 18),
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                          vertical:
+                                                              20.0, // Adjust the padding as needed
+                                                          horizontal: 16.0,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    // suffixIcon: Icon(
-                                                    //   Icons.arrow_drop_down,
-                                                    //   size: 40,
-                                                    // ),
+                                                      suggestions:
+                                                          homeController.brands
+                                                              .map(
+                                                                (e) =>
+                                                                    SearchFieldListItem<
+                                                                        dynamic>(
+                                                                  e['name'],
 
-                                                    filled: true,
-                                                    fillColor:
-                                                        HexColor("#F6F7FA"),
-                                                    labelText: "Brand",
-                                                    labelStyle: const TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 18),
-                                                    contentPadding:
-                                                        const EdgeInsets
-                                                            .symmetric(
-                                                      vertical:
-                                                          20.0, // Adjust the padding as needed
-                                                      horizontal: 16.0,
-                                                    ),
-                                                  ),
-                                                  suggestions:
-                                                      homeController.brands
-                                                          .map(
-                                                            (e) =>
-                                                                SearchFieldListItem<
-                                                                    dynamic>(
-                                                              e['name'],
-
-                                                              item: e,
-                                                              // Use child to show Custom Widgets in the suggestions
-                                                              // defaults to Text widget
-                                                              child: e == null
-                                                                  ? const Text(
-                                                                      'data')
-                                                                  : Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child:
-                                                                          Row(
-                                                                        children: [
-                                                                          Expanded(
-                                                                            child:
-                                                                                Text(
-                                                                              e['name'],
-                                                                              softWrap: true,
-                                                                              maxLines: 2,
-                                                                              overflow: TextOverflow.fade,
-                                                                            ),
+                                                                  item: e,
+                                                                  // Use child to show Custom Widgets in the suggestions
+                                                                  // defaults to Text widget
+                                                                  child: e ==
+                                                                          null
+                                                                      ? const Text(
+                                                                          'data')
+                                                                      : Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Text(
+                                                                                  e['name'],
+                                                                                  softWrap: true,
+                                                                                  maxLines: 2,
+                                                                                  overflow: TextOverflow.fade,
+                                                                                ),
+                                                                              ),
+                                                                            ],
                                                                           ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                            ),
-                                                          )
-                                                          .toList(),
-                                                  onSuggestionTap:
-                                                      (SearchFieldListItem<
-                                                              dynamic>
-                                                          value) {
-                                                    homeController.selectedBrand
-                                                            .value =
-                                                        value.item['id']
-                                                            .toString();
-                                                    print(homeController
-                                                        .selectedBrand.value);
-                                                    // setState(() {
-                                                    //   _selectedProject =
-                                                    //       value.item.id.toString();
-                                                    //   _selectedProject_id =
-                                                    //       value.item.project_id.toString();
-                                                    // });
-
-                                                    focus.unfocus();
-                                                  },
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'Brand is requried';
-                                                    } else if (homeController
+                                                                        ),
+                                                                ),
+                                                              )
+                                                              .toList(),
+                                                      onSuggestionTap:
+                                                          (SearchFieldListItem<
+                                                                  dynamic>
+                                                              value) {
+                                                        homeController
+                                                                .selectedBrand
+                                                                .value =
+                                                            value.item['id']
+                                                                .toString();
+                                                        print(homeController
                                                             .selectedBrand
-                                                            .value ==
-                                                        '') {
-                                                      return 'Invalid Brand';
-                                                    }
-                                                    return null;
-                                                  },
-                                                ),
+                                                            .value);
+                                                        // setState(() {
+                                                        //   _selectedProject =
+                                                        //       value.item.id.toString();
+                                                        //   _selectedProject_id =
+                                                        //       value.item.project_id.toString();
+                                                        // });
+
+                                                        focus.unfocus();
+                                                      },
+                                                      validator: (value) {
+                                                        if (value!.isEmpty) {
+                                                          return 'Brand is requried';
+                                                        } else if (homeController
+                                                                .selectedBrand
+                                                                .value ==
+                                                            '') {
+                                                          return 'Invalid Brand';
+                                                        }
+                                                        return null;
+                                                      },
+                                                    )),
                                               ),
                                               Expanded(
                                                   child: IconButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  showDialog<String>(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        AddBrand(),
+                                                  );
+                                                },
                                                 icon: const Icon(Icons.add),
                                               ))
                                             ],
@@ -591,105 +605,122 @@ class AddProduct extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           flex: 10,
-                                          child: SearchField<dynamic>(
-                                            controller: homeController
-                                                .addDistributorController,
-                                            focusNode: focusDistributor,
-                                            itemHeight: 55,
-                                            searchInputDecoration:
-                                                InputDecoration(
-                                              border: const OutlineInputBorder(
-                                                borderSide: BorderSide.none,
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(7.0),
-                                                ),
-                                              ),
-                                              // suffixIcon: Icon(
-                                              //   Icons.arrow_drop_down,
-                                              //   size: 40,
-                                              // ),
-
-                                              filled: true,
-                                              fillColor: HexColor("#F6F7FA"),
-                                              labelText: "Distributor",
-                                              labelStyle: const TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 18),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical:
-                                                    20.0, // Adjust the padding as needed
-                                                horizontal: 16.0,
-                                              ),
-                                            ),
-                                            suggestions: homeController
-                                                .distributors
-                                                .map(
-                                                  (e) => SearchFieldListItem<
-                                                      dynamic>(
-                                                    e['name'],
-
-                                                    item: e,
-                                                    // Use child to show Custom Widgets in the suggestions
-                                                    // defaults to Text widget
-                                                    child: e == null
-                                                        ? const Text('data')
-                                                        : Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Row(
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    e['name'],
-                                                                    softWrap:
-                                                                        true,
-                                                                    maxLines: 2,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .fade,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
+                                          child: Obx(() => SearchField<dynamic>(
+                                                // controller: homeController
+                                                //     .addDistributorController,
+                                                focusNode: focusDistributor,
+                                                itemHeight: 55,
+                                                searchInputDecoration:
+                                                    InputDecoration(
+                                                  border:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide.none,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(7.0),
+                                                    ),
                                                   ),
-                                                )
-                                                .toList(),
-                                            onSuggestionTap:
-                                                (SearchFieldListItem<dynamic>
-                                                    value) {
-                                              homeController.selectedDistributor
-                                                      .value =
-                                                  value.item['id'].toString();
-                                              print(homeController
-                                                  .selectedDistributor.value);
-                                              // setState(() {
-                                              //   _selectedProject =
-                                              //       value.item.id.toString();
-                                              //   _selectedProject_id =
-                                              //       value.item.project_id.toString();
-                                              // });
+                                                  // suffixIcon: Icon(
+                                                  //   Icons.arrow_drop_down,
+                                                  //   size: 40,
+                                                  // ),
 
-                                              focus.unfocus();
-                                            },
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'Distributor is requried';
-                                              } else if (homeController
+                                                  filled: true,
+                                                  fillColor:
+                                                      HexColor("#F6F7FA"),
+                                                  labelText: "Distributor",
+                                                  labelStyle: const TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 18),
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                          .symmetric(
+                                                    vertical:
+                                                        20.0, // Adjust the padding as needed
+                                                    horizontal: 16.0,
+                                                  ),
+                                                ),
+                                                suggestions:
+                                                    homeController.distributors
+                                                        .map(
+                                                          (e) =>
+                                                              SearchFieldListItem<
+                                                                  dynamic>(
+                                                            e['name'],
+
+                                                            item: e,
+                                                            // Use child to show Custom Widgets in the suggestions
+                                                            // defaults to Text widget
+                                                            child: e == null
+                                                                ? const Text(
+                                                                    'data')
+                                                                : Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Expanded(
+                                                                          child:
+                                                                              Text(
+                                                                            e['name'],
+                                                                            softWrap:
+                                                                                true,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.fade,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                          ),
+                                                        )
+                                                        .toList(),
+                                                onSuggestionTap:
+                                                    (SearchFieldListItem<
+                                                            dynamic>
+                                                        value) {
+                                                  homeController
+                                                          .selectedDistributor
+                                                          .value =
+                                                      value.item['id']
+                                                          .toString();
+                                                  print(homeController
                                                       .selectedDistributor
-                                                      .value ==
-                                                  '') {
-                                                return 'Invalid Distributor';
-                                              }
-                                              return null;
-                                            },
-                                          ),
+                                                      .value);
+                                                  // setState(() {
+                                                  //   _selectedProject =
+                                                  //       value.item.id.toString();
+                                                  //   _selectedProject_id =
+                                                  //       value.item.project_id.toString();
+                                                  // });
+
+                                                  focus.unfocus();
+                                                },
+                                                validator: (value) {
+                                                  if (value!.isEmpty) {
+                                                    return 'Distributor is requried';
+                                                  } else if (homeController
+                                                          .selectedDistributor
+                                                          .value ==
+                                                      '') {
+                                                    return 'Invalid Distributor';
+                                                  }
+                                                  return null;
+                                                },
+                                              )),
                                         ),
                                         Expanded(
                                             child: IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            showDialog<String>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  AddDistributor(),
+                                            );
+                                          },
                                           icon: const Icon(Icons.add),
                                         ))
                                       ],
