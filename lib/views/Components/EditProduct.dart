@@ -14,8 +14,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:storemanager/views/Components/AddBrand.dart';
 import 'package:storemanager/views/Components/AddDistributor.dart';
 
-class AddProduct extends StatelessWidget {
-  AddProduct({Key? key}) : super(key: key);
+class EditProduct extends StatelessWidget {
+  EditProduct({Key? key}) : super(key: key);
   final productController = Get.put(ProductController());
   final homeController = Get.put(HomeController());
   final _formkey = GlobalKey<FormState>();
@@ -83,8 +83,8 @@ class AddProduct extends StatelessWidget {
                                             MainAxisAlignment.start,
                                         children: [
                                           TextFormField(
-                                            controller: homeController
-                                                .addProductNameController,
+                                            controller: productController
+                                                .editProductNameController,
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
@@ -129,8 +129,8 @@ class AddProduct extends StatelessWidget {
                                             height: 10,
                                           ),
                                           TextFormField(
-                                            controller: homeController
-                                                .addProductOtherNameController,
+                                            controller: productController
+                                                .editProductOtherNameController,
                                             decoration: InputDecoration(
                                                 filled: true,
                                                 fillColor: HexColor("#F6F7FA"),
@@ -223,12 +223,16 @@ class AddProduct extends StatelessWidget {
                                                         filled: true,
                                                         fillColor:
                                                             HexColor("#F6F7FA"),
-                                                        labelText: "Brand",
-                                                        labelStyle:
-                                                            const TextStyle(
-                                                                color:
-                                                                    Colors.grey,
-                                                                fontSize: 18),
+                                                        hintText:
+                                                            productController
+                                                                .selectedBrandName
+                                                                .value,
+                                                        // labelText: "Brand2222",
+                                                        // labelStyle:
+                                                        //     const TextStyle(
+                                                        //         color:
+                                                        //             Colors.grey,
+                                                        //         fontSize: 18),
                                                         contentPadding:
                                                             const EdgeInsets
                                                                 .symmetric(
@@ -325,8 +329,8 @@ class AddProduct extends StatelessWidget {
                                             height: 10,
                                           ),
                                           TextFormField(
-                                            controller: homeController
-                                                .addProductModelController,
+                                            controller: productController
+                                                .editProductModelController,
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
@@ -372,8 +376,8 @@ class AddProduct extends StatelessWidget {
                                           ),
                                           TextFormField(
                                             keyboardType: TextInputType.number,
-                                            controller: homeController
-                                                .addProductPriceController,
+                                            controller: productController
+                                                .editProductPriceController,
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
@@ -419,8 +423,8 @@ class AddProduct extends StatelessWidget {
                                           ),
                                           TextFormField(
                                             keyboardType: TextInputType.number,
-                                            controller: homeController
-                                                .addProductQuantityController,
+                                            controller: productController
+                                                .editProductQuantityController,
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
@@ -496,8 +500,8 @@ class AddProduct extends StatelessWidget {
                                             MainAxisAlignment.start,
                                         children: [
                                           TextFormField(
-                                            controller: homeController
-                                                .addProductRackNumberController,
+                                            controller: productController
+                                                .editProductRackNumberController,
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
@@ -542,8 +546,8 @@ class AddProduct extends StatelessWidget {
                                             height: 10,
                                           ),
                                           TextFormField(
-                                            controller: homeController
-                                                .addProductRackLevelController,
+                                            controller: productController
+                                                .editProductRackLevelController,
                                             decoration: InputDecoration(
                                                 filled: true,
                                                 fillColor: HexColor("#F6F7FA"),
@@ -628,10 +632,9 @@ class AddProduct extends StatelessWidget {
                                                   filled: true,
                                                   fillColor:
                                                       HexColor("#F6F7FA"),
-                                                  labelText: "Distributor",
-                                                  labelStyle: const TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 18),
+                                                  hintText: productController
+                                                      .selectedDistributorName
+                                                      .value,
                                                   contentPadding:
                                                       const EdgeInsets
                                                           .symmetric(
@@ -734,8 +737,8 @@ class AddProduct extends StatelessWidget {
                                     minLines:
                                         1, // Normal textInputField will be displayed
                                     maxLines: 3,
-                                    controller:
-                                        homeController.addProductNoteController,
+                                    controller: productController
+                                        .editProductNoteController,
                                     decoration: InputDecoration(
                                         filled: true,
                                         fillColor: HexColor("#F6F7FA"),
@@ -1058,7 +1061,7 @@ class AddProduct extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: TextButton(
                   onPressed: () async {
-                    await homeController.addProduct();
+                    await productController.editProduct();
                     await productController.getProducts();
                     Get.back();
                   },

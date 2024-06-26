@@ -45,7 +45,6 @@ class HomeController extends GetxController {
   final addDistributorPhoneNoController = TextEditingController();
   final addDistributorNoteController = TextEditingController();
 
-
   @override
   void onInit() {
     shopName.value = 'Ranatunga Motors';
@@ -195,8 +194,8 @@ class HomeController extends GetxController {
       'Authorization': 'Bearer ${productController.auth_token}',
     }, body: {
       'name': addDistributorController.text,
-      'phoneNo':addDistributorPhoneNoController.text,
-      'note':addDistributorNoteController.text
+      'phoneNo': addDistributorPhoneNoController.text,
+      'note': addDistributorNoteController.text
     });
     var result = jsonDecode(response.body);
     return (result);
@@ -204,7 +203,8 @@ class HomeController extends GetxController {
 
   Future getProductImages() async {
     final picker = ImagePicker();
-    final List<XFile>? pickedFiles = await picker.pickMultiImage(imageQuality: 20);
+    final List<XFile>? pickedFiles =
+        await picker.pickMultiImage(imageQuality: 20);
     if (pickedFiles != null) {
       productImages.addAll(pickedFiles);
     } else {
@@ -212,7 +212,6 @@ class HomeController extends GetxController {
     }
   }
 
- 
   Future getProductImagesCamera() async {
     final ImagePicker _picker = ImagePicker();
     final img =
@@ -256,7 +255,7 @@ class HomeController extends GetxController {
     if (response.statusCode == 200) {
       Get.back();
       loginController.showToast('Product added Successfully');
-      selectedProductsList.clear();
+
       productImagesConv.clear();
       productImages.clear();
       addProductNameController.clear();

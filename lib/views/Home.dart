@@ -6,6 +6,7 @@ import 'package:storemanager/controllers/HomeController.dart';
 import 'package:storemanager/controllers/ProductController.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:storemanager/views/Components/AddProduct.dart';
+import 'package:storemanager/views/Components/EditProduct.dart';
 import 'package:storemanager/views/Components/ImagePopUp.dart';
 import 'package:storemanager/views/Components/Order.dart';
 import 'package:storemanager/views/Components/OrderPc.dart';
@@ -37,7 +38,7 @@ class Home extends StatelessWidget {
                           builder: (BuildContext context) => OrderPc(),
                         );
                       },
-                      child: Icon(Icons.done),
+                      child: const Icon(Icons.done),
                     ),
                 ],
               ),
@@ -146,7 +147,8 @@ class Home extends StatelessWidget {
                                             homeController.startShopping.value
                                                 ? 'Cancel the Order'
                                                 : 'Make a Order',
-                                            style: TextStyle(fontSize: 15),
+                                            style:
+                                                const TextStyle(fontSize: 15),
                                           )
                                         ],
                                       ),
@@ -419,7 +421,7 @@ class Home extends StatelessWidget {
                                                                               context) {
                                                                         return AlertDialog(
                                                                           title:
-                                                                              Text('Number of Items'),
+                                                                              const Text('Number of Items'),
                                                                           content:
                                                                               TextFormField(
                                                                             controller:
@@ -427,18 +429,18 @@ class Home extends StatelessWidget {
                                                                             keyboardType:
                                                                                 TextInputType.number,
                                                                             decoration:
-                                                                                InputDecoration(hintText: 'Enter a number'),
+                                                                                const InputDecoration(hintText: 'Enter a number'),
                                                                           ),
                                                                           actions: <
                                                                               Widget>[
                                                                             TextButton(
-                                                                              child: Text('Cancel'),
+                                                                              child: const Text('Cancel'),
                                                                               onPressed: () {
                                                                                 Get.back();
                                                                               },
                                                                             ),
                                                                             ElevatedButton(
-                                                                              child: Text('Submit'),
+                                                                              child: const Text('Submit'),
                                                                               onPressed: () async {
                                                                                 variables[index].value = controllers[index].text;
                                                                                 print(variables[index].value);
@@ -548,7 +550,7 @@ class Home extends StatelessWidget {
                                                                                   ),
                                                                                   SizedBox(height: Height * 0.01),
                                                                                   Text(
-                                                                                    'Brand: ${productController.productsList[index].brandName} ,Model: ${productController.productsList[index].model} ',
+                                                                                    'Brand: ${productController.productsList[index].brandName}, Model: ${productController.productsList[index].model} ',
                                                                                     style: TextStyle(
                                                                                       color: fontColor1,
                                                                                       fontSize: 18,
@@ -622,24 +624,93 @@ class Home extends StatelessWidget {
                                                                                   // )
                                                                                 ],
                                                                               ),
-                                                                              SizedBox(
-                                                                                // width:
-                                                                                //     Width * 0.3,
-                                                                                height: Height * 0.05,
-                                                                                child: MaterialButton(
-                                                                                  padding: const EdgeInsets.only(left: 20, right: 20),
-                                                                                  onPressed: () async {},
-                                                                                  color: colortheam5,
-                                                                                  textColor: Colors.black,
-                                                                                  shape: RoundedRectangleBorder(
-                                                                                    borderRadius: BorderRadius.circular(20.0),
-                                                                                  ),
-                                                                                  child: const Text(
-                                                                                    'Click here to generate to bar code',
-                                                                                    style: TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w500, color: Colors.black),
+                                                                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                                                                SizedBox(
+                                                                                  // width:
+                                                                                  //     Width * 0.3,
+                                                                                  height: Height * 0.05,
+                                                                                  child: MaterialButton(
+                                                                                    padding: const EdgeInsets.only(left: 20, right: 20),
+                                                                                    onPressed: () async {},
+                                                                                    color: colortheam5,
+                                                                                    textColor: Colors.black,
+                                                                                    shape: RoundedRectangleBorder(
+                                                                                      borderRadius: BorderRadius.circular(20.0),
+                                                                                    ),
+                                                                                    child: const Text(
+                                                                                      'Click here to generate to bar code',
+                                                                                      style: TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w500, color: Colors.black),
+                                                                                    ),
                                                                                   ),
                                                                                 ),
-                                                                              ),
+                                                                                Row(
+                                                                                  children: [
+                                                                                    IconButton(
+                                                                                        onPressed: () async {
+                                                                                          await homeController.fetchBrands();
+                                                                                          await homeController.fetchDistributors();
+                                                                                          productController.getProductDataToEdit(index);
+                                                                                          showDialog<String>(
+                                                                                            context: context,
+                                                                                            builder: (BuildContext context) => EditProduct(),
+                                                                                          );
+                                                                                        },
+                                                                                        icon: const Icon(
+                                                                                          Icons.edit,
+                                                                                          color: Colors.yellow,
+                                                                                        )),
+                                                                                    const SizedBox(
+                                                                                      width: 10,
+                                                                                    ),
+                                                                                    IconButton(
+                                                                                        onPressed: () async {
+                                                                                          showDialog<String>(
+                                                                                            context: context,
+                                                                                            builder: (BuildContext context) => AlertDialog(
+                                                                                              title: const Text('Delete Product'),
+                                                                                              content: SingleChildScrollView(
+                                                                                                child: ListBody(
+                                                                                                  children: <Widget>[
+                                                                                                    const Text('Are you sure want to delete this Product?'),
+                                                                                                    Text(
+                                                                                                      productController.productsList[index].name,
+                                                                                                      style: TextStyle(
+                                                                                                        color: fontColor2,
+                                                                                                        fontSize: 15,
+                                                                                                        fontWeight: FontWeight.w800,
+                                                                                                      ),
+                                                                                                      maxLines: 2,
+                                                                                                      overflow: TextOverflow.fade,
+                                                                                                    ),
+                                                                                                  ],
+                                                                                                ),
+                                                                                              ),
+                                                                                              actions: <Widget>[
+                                                                                                TextButton(
+                                                                                                  child: const Text('Yes'),
+                                                                                                  onPressed: () async {
+                                                                                                    await productController.deleteProduct(productController.productsList[index].id);
+                                                                                                    await productController.getProducts();
+                                                                                                    Get.back();
+                                                                                                  },
+                                                                                                ),
+                                                                                                TextButton(
+                                                                                                  child: const Text('No'),
+                                                                                                  onPressed: () {
+                                                                                                    Get.back();
+                                                                                                  },
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                          );
+                                                                                        },
+                                                                                        icon: const Icon(
+                                                                                          Icons.delete_rounded,
+                                                                                          color: Colors.red,
+                                                                                        ))
+                                                                                  ],
+                                                                                ),
+                                                                              ])
                                                                             ]),
                                                                           ],
                                                                         )),

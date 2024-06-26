@@ -42,6 +42,7 @@ class Product {
   dynamic modifiedBy;
   dynamic modifiedDate;
   String brandName;
+  String distributorName;
   List<Image> images;
 
   Product({
@@ -61,6 +62,7 @@ class Product {
     required this.modifiedBy,
     required this.modifiedDate,
     required this.brandName,
+    required this.distributorName,
     required this.images,
   });
 
@@ -81,6 +83,7 @@ class Product {
         modifiedBy: json["modified_by"],
         modifiedDate: json["modified_date"],
         brandName: json["brandName"],
+        distributorName: json["distributorName"],
         images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
       );
 
@@ -101,6 +104,7 @@ class Product {
         "modified_by": modifiedBy,
         "modified_date": modifiedDate,
         "brandName": brandName,
+        "distributorName": distributorName,
         "images": List<dynamic>.from(images.map((x) => x.toJson())),
       };
 }
